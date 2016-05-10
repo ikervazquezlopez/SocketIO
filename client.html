@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Client</title>
+  </head>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+ 
+
+
+  <body>
+    <ul id='coords'></ul>
+
+
+  </body>
+
+  <script>
+      var socket = io();
+
+      var actual_coordinates = [0, 0];
+      var fov_x = 30; //Difference from actual_coordinates and the left corner of the fov
+      var fov_y = 30; //Difference from actual_coordinates and the top corner of the fov
+
+
+      socket.on('Coordinates-Server', function(coords_server, master_info){
+
+          $('#coords').append('<li>' + coords_server + ' | ' + master_info.fov + '</li>');
+          //if(actual_coordinates[0] + fov_x > fov_maste)
+      });
+
+    
+
+
+  </script>

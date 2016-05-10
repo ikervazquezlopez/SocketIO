@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Master</title>
+  </head>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+ 
+
+
+  <body>
+    <u1 id='coords'></u1>
+
+
+  </body>
+
+  <script>
+      var socket = io();
+
+      var coords = [0, 0];
+      var fov_x = 30; //Difference from actual_coordinates and the left corner of the fov
+      var fov_y = 30; //Difference from actual_coordinates and the top corner of the fov
+
+
+      document.addEventListener('keydown', function(event) {
+          var key = event.keyCode;
+          switch(key){
+            case 37: //Left arrow
+              coords[0] = coords[0] - 5;
+              break;
+            case 38: //Up arrow
+              coords[1] = coords[1] + 5;
+              break;
+            case 39: //Right arrow
+              coords[0] = coords[0] + 5;
+              break;
+            case 40: //Down arrow
+              coords[1] = coords[1] - 5;
+              break;
+
+          }
+          
+          var json_string = '{"coords" : [' + coords[0] + ',' + coords[1] + '],' +
+                             '"fov" : [' + fov_x + ',' + fov_y + ']}';
+          var master_info = JSON.parse(json_string);
+
+          socket.emit("Coordinates-Master", master_info);
+      });
+/*
+      while(true){
+        var coords = [Math.random()*100, Math.random()*100];
+        $('#coords').append('<li>' + coords + "</li>");
+        
+        socket.emit("Coordinates-Master", coords);
+
+      }
+    */
+
+
+  </script>
